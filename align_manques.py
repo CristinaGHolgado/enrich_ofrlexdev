@@ -400,12 +400,12 @@ def save_df_by_pos(df):
 ######################
 
 
-folder = 'scripts\\_annotation_manques_officiel\\'
-manques_lemmatisees = folder + 'manques annotes\\' + "lgerm_tagged_manques11nov_3.tsv" # Formes manquantes lemmatisées avec lgerm (no desamb.)
+folder = 'scripts\\enrich_ofrlexdev\\'
+manques_lemmatisees = folder + "manques\\lgerm_tagged_manques11nov_3.tsv" # Formes manquantes lemmatisées avec lgerm (no desamb.)
 inventory_bfm = folder + 'ressources\\' + "inventaire_bfmgoldlem_nonorm.tsv" # Inventaire du corpus BFMGOLDLEM
 frolex_f = folder + 'ressources\\frolex_lexique.tsv' # Lexique Frolex
 lexique_lgerm = "lgerm\\lexiques\\graphies_MF.txt" # Lexique lgerm
-manques_file = "scripts\\_annotation_manques_officiel\\formes manquantes\\manques11nov.txt" # Manques
+manques_file = folder + "manques\\manques11nov.txt" # Manques
 
 
 
@@ -415,7 +415,7 @@ manques_file = "scripts\\_annotation_manques_officiel\\formes manquantes\\manque
 
 
 manques_annotes_lgerm = prep_lg(manques_lemmatisees, mode='lemmatise')
-# manques_annotes_lgerm1 = prep_lg(lexique_lgerm, mode='lexique') # applique sur les variantes graphiques generes
+# manques_annotes_lgerm = prep_lg(lexique_lgerm, mode='lexique') # applique sur les variantes graphiques generes
 
 bfm_entries = prep_bfm(inventory_bfm)
 
@@ -444,8 +444,8 @@ print(pos_grouped_lgerm)
 print(f'\n\nWith both sources merged, we found a total of {len(merged_bfm_lg)} possibilities')
 
 bf = merged_bfm_lg[(merged_bfm_lg.cattex != '_') & (merged_bfm_lg.lemma != '_')]
-bf['cattex'] = bf['cattex'].str.replace('NOMcom','Nco')
-bf['cattex'] = bf['cattex'].str.replace('NOMcom','Nco')
+# bf['cattex'] = bf['cattex'].str.replace('NOMcom','Nco')
+# bf['cattex'] = bf['cattex'].str.replace('NOMcom','Nco')
 
 bf['cattex'] = bf['cattex'].apply(lambda x: x[:3] if '.' not in x else x)
 print(f"\nTrouvées dans l\'inventaire du corpus BFMGOLDLEM : {len(bf)}")
