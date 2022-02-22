@@ -444,8 +444,6 @@ print(pos_grouped_lgerm)
 print(f'\n\nWith both sources merged, we found a total of {len(merged_bfm_lg)} possibilities')
 
 bf = merged_bfm_lg[(merged_bfm_lg.cattex != '_') & (merged_bfm_lg.lemma != '_')]
-# bf['cattex'] = bf['cattex'].str.replace('NOMcom','Nco')
-# bf['cattex'] = bf['cattex'].str.replace('NOMcom','Nco')
 
 bf['cattex'] = bf['cattex'].apply(lambda x: x[:3] if '.' not in x else x)
 print(f"\nTrouvées dans l\'inventaire du corpus BFMGOLDLEM : {len(bf)}")
