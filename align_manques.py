@@ -4,11 +4,13 @@ Created on Sun Feb 13 22:57:52 2022
 
 @author: Cristina GH
 
-Takes list of forms (missing in ofrlex) lemmatized by lgerm or not and
-align the annotations to lgerm lexicon (if no lemmatized) and to the BFMLEMGOLD inventory and Frolex
-lexicon.
-Annotated forms are aligned based of matching on forms. Multiple POS cas correspond to a single form,
-so different POS may be associated to the form.
+Takes list of forms (missing in ofrlex) that have been lemmatized by lgerm (or not, plain list of forms)
+and aligns the annotations to multipleexternal lexical sources.
+If missing lemmatized forms are passed, they are aligned to the BFMLEMGOLD inventory and Frolex
+lexicon. If plain list of forms are passed, they are first aligned to the entries in lgerm lexicon.
+
+Annotated forms are aligned based of matching on forms. Multiple POS can thus correspond to a single form,
+so different POS may be associated to it.
 
 A sorting is done based on POS (normalized in all sources**) given priority to BFM/FRO:
     
@@ -24,8 +26,8 @@ A sorting is done based on POS (normalized in all sources**) given priority to B
         Case 5) No candidates -> Unknown (à générer des variants pour relancer un le matching)
                                                                               
                                                                                                                                             
-** Each dataframe for each ressource posses a column with the main cattex category, as lgerm
-use different annotation format (´subs.´ rather than ´NOMcom´)
+** Each dataframe for each ressource posses a column with the main homogeneus cattex category, as lgerm
+uses different annotation formatting (´subst.´ rather than ´NOMcom´)
 
 This script uses the next files :
     - Manques.txt OU Manques annotés par LGERM
@@ -48,7 +50,7 @@ pd.set_option('display.max_rows', None)
 
 
 
-def prep_lg(manques_lgerm, mode=None):
+def prep_lg(manques_lgerm, mode):
     """
     Load and preprocess annotated (or plain) missing forms and match them to lgerm lexicon
     if plain.
@@ -57,13 +59,13 @@ def prep_lg(manques_lgerm, mode=None):
     ----------
     manques_lgerm : str
         Annotated (or plain) unknwon forms
-    mode : TYPE, optional
-        DESCRIPTION. The default is None.
+    mode : str
+        'lemmatise': already annotated missing forms
+        'lexique': plain forms to be merged to lgerm lexicon
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    DataFrame
 
     """
     
